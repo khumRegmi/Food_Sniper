@@ -238,7 +238,9 @@ const RestaurantPage = ({ google, locations = [] }) => {
               </div>
             )}
 
-            {review && reviewLoading && <div>Review is loading</div>}
+            {review && reviewLoading && (
+              <div>Review is loading. Please wait</div>
+            )}
 
             {review && !reviewLoading && (
               <div>
