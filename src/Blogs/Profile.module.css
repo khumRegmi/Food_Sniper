@@ -1,0 +1,47 @@
+.pic {
+  width: 80px;
+  height: 80px;
+  margin-left: 15px;
+  border-radius: 50%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-left: 30px;
+  margin-right: 15px;
+}
+
+.division {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  margin: 0 auto;
+}
+
+.p1 {
+  font-size: 14pt;
+  margin: 0;
+  font-family: monospace;
+}
+
+.p2 {
+  margin: 0;
+  font-size: 11pt;
+}
+
+.follow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  border: solid black;
+  margin: 22px 0px 18px;
+  color: white;
+  background-color: red;
+  border-radius: 10px;
+  width: 90px;
+  height: 50px;
+  text-decoration: none;
+}

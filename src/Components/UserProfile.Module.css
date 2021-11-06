@@ -1,0 +1,38 @@
+.page {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  margin: 200px auto;
+  border: solid black 3px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  background-color: darkolivegreen;
+}
+
+.name,
+.email {
+  margin: 50px 50px auto;
+  color: bisque;
+  font-size: 20px;
+}
+
+.email {
+  margin-bottom: 30px;
+}
+
+.addRest {
+  padding: 10px;
+  background-color: darkgreen;
+  color: white;
+  width: 150%;
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,11 @@
+.card {
+  background-color: skyblue;
+  width: fit-content;
+  margin-bottom: "20px";
+}
+
+.topBloggers {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: "30px";
+}

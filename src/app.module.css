@@ -1,0 +1,13 @@
+.nav {
+  justify-content: space-between;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  margin-left: 45px;
+}
+
+.link:hover {
+  color: orangered;
+}
