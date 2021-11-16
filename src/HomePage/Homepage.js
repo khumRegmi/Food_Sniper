@@ -9,12 +9,13 @@ import { useHistory } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 
 export default function Homepage() {
-  // const { nameUser } = useContext(SignInCtx);
+  const { nameUser } = useContext(SignInCtx);
 
   const [foodName, setFoodName] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const history = useHistory();
 
+  //set food names
   const callthis1 = () => {
     setFoodName("Pizza");
   };
