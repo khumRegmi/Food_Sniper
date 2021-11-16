@@ -24,30 +24,48 @@ const RestaurantPage = ({ google, locations = [] }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [reviewLoading, setReviewLoading] = useState(true);
 
-  const [arr, setArr] = useState([]);
+  const [restArr, setRestArr] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [userNames, setUserNames] = useState([]);
 
   useEffect(() => {
     axios
       .get(`https://foodhub-api.herokuapp.com/restaurant/details/${restName}`)
       .then((resp) => {
-        setArr([resp.data.data]);
-
+        setRestArr([resp.data.data]);
+        console.log(restArr);
         setIsLoading(false);
       });
 
-    axios
-      .get(
-        `https://foodhub-api.herokuapp.com/restaurant/review/5cc1f333df245c427cc2664b`
-      )
-      //   https://foodhub-api.herokuapp.com/restaurant/review/5cc1f333df245c427cc2664b
-      .then((resp) => {
-        setReviews([...resp.data.data]);
-        setReviewLoading(false);
-      });
+    // axios
+    //   .get(
+    //     `https://foodhub-api.herokuapp.com/restaurant/review/${restArr[0]._id}`
+    //   )
+    //   .then((resp) => {
+    //     setReviews([...resp.data.data]);
+    //     // console.log(
+    //     //   resp.data.data.map((item) => console.log(item.userId.username))
+    //     // );
+    //     // console.log(reviews);
+    //     setReviewLoading(false);
+    //   });
   }, []);
 
-  // console.log(arr);
+  useEffect(() => {
+    !isLoading &&
+      axios
+        .get(
+          `https://foodhub-api.herokuapp.com/restaurant/review/${restArr[0]._id}`
+        )
+        .then((resp) => {
+          setReviews([...resp.data.data]);
+          setReviewLoading(false);
+          console.log("XXX");
+        });
+  }, [isLoading]);
+
+  // console.log(restArr);
+  // !isLoading && console.log(`${restArr[0]._id}`);
 
   const aboutHandler = () => {
     setAbout(true);
@@ -88,7 +106,7 @@ const RestaurantPage = ({ google, locations = [] }) => {
               margin: "0px auto 0px",
               display: "block",
             }}
-            src={`${arr[0].banner_image}`}
+            src={`${restArr[0].banner_image}`}
             alt="restaurant 1"
           ></img>
           <div
@@ -134,13 +152,13 @@ const RestaurantPage = ({ google, locations = [] }) => {
                   Location
                 </h4>
                 <h5 style={{ color: "black", margin: "-10px auto 15px" }}>
-                  {arr[0].address.area} , {arr[0].address.district}
+                  {restArr[0].address.area} , {restArr[0].address.district}
                 </h5>
                 <h4 style={{ fontSize: "25px", fontFamily: "serif" }}>
                   Opening Hours:{" "}
                 </h4>
                 <h5 style={{ color: "black", margin: "-10px auto 15px" }}>
-                  {arr[0].hour.start} to {arr[0].hour.end}
+                  {restArr[0].hour.start} to {restArr[0].hour.end}
                 </h5>
                 <h4
                   style={{
@@ -189,7 +207,7 @@ const RestaurantPage = ({ google, locations = [] }) => {
                 <form>
                   <MealCard>
                     <ul>
-                      {arr[0].menu.map((item) => (
+                      {restArr[0].menu.map((item) => (
                         <li key={item._id}>
                           <div
                             style={{
@@ -271,9 +289,18 @@ const RestaurantPage = ({ google, locations = [] }) => {
                           round="20px"
                           text="15px"
                           marginRight="10px"
-                          name={item.userId.username}
+                          name={
+                            item.userId === null
+                              ? "No Name"
+                              : item.userId.username
+                          }
+                          // name="Khum Regmi"
                         />
-                        <h4 style={{ color: "red" }}>{item.userId.username}</h4>
+                        <h4 style={{ color: "red", marginLeft: "10px" }}>
+                          {item.userId === null
+                            ? "No Name"
+                            : item.userId.username}
+                        </h4>
                       </div>
                       <p style={{ padding: "10px", marginTop: "-10px" }}>
                         "{item.comment}"
@@ -294,10 +321,10 @@ export default RestaurantPage;
 
 // {
 //   /* <a
-//               href={`https:${arr[0].social.facebook}`}  //dynamic
+//               href={`https:${restArr[0].social.facebook}`}  //dynamic
 //               target="_blank"
-//               rel="noreferrer"
 //             >
 //               Facebook1
 //             </a> */
+//               rel="noreferrer"
 // }
