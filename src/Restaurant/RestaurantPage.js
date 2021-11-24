@@ -28,12 +28,14 @@ const RestaurantPage = ({ google, locations = [] }) => {
   const [reviews, setReviews] = useState([]);
   const [userNames, setUserNames] = useState([]);
 
+  var today = new Date();
+  var hourOftheDay = today.getHours();
+
   useEffect(() => {
     axios
       .get(`https://foodhub-api.herokuapp.com/restaurant/details/${restName}`)
       .then((resp) => {
         setRestArr([resp.data.data]);
-        console.log(restArr);
         setIsLoading(false);
       });
 
@@ -60,7 +62,6 @@ const RestaurantPage = ({ google, locations = [] }) => {
         .then((resp) => {
           setReviews([...resp.data.data]);
           setReviewLoading(false);
-          console.log("XXX");
         });
   }, [isLoading]);
 
@@ -147,57 +148,104 @@ const RestaurantPage = ({ google, locations = [] }) => {
               }}
             ></p>
             {about && (
-              <div>
-                <h4 style={{ fontSize: "25px", fontFamily: "serif" }}>
-                  Location
-                </h4>
-                <h5 style={{ color: "black", margin: "-10px auto 15px" }}>
-                  {restArr[0].address.area} , {restArr[0].address.district}
-                </h5>
-                <h4 style={{ fontSize: "25px", fontFamily: "serif" }}>
-                  Opening Hours:{" "}
-                </h4>
-                <h5 style={{ color: "black", margin: "-10px auto 15px" }}>
-                  {restArr[0].hour.start} to {restArr[0].hour.end}
-                </h5>
-                <h4
-                  style={{
-                    fontSize: "25px",
-                    fontFamily: "serif",
-                    marginBottom: "-5px",
-                  }}
-                >
-                  Socials
-                </h4>
-                <a
-                  style={{ marginRight: "15px", textDecoration: "none" }}
-                  href={`https://www.facebook.com/`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Facebook
-                </a>
-                <a
-                  style={{
-                    marginRight: "15px",
-                    textDecoration: "none",
-                    color: "red",
-                  }}
-                  href={`https://www.instagram.com/?hl=en`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Instagram
-                </a>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div>
+                  <h4 style={{ fontSize: "25px", fontFamily: "serif" }}>
+                    Location
+                  </h4>
+                  <h5 style={{ color: "black", margin: "-10px auto 15px" }}>
+                    {restArr[0].address.area} , {restArr[0].address.district}
+                  </h5>
+                  <h4 style={{ fontSize: "25px", fontFamily: "serif" }}>
+                    Opening Hours:{" "}
+                  </h4>
+                  <h5 style={{ color: "black", margin: "-10px auto 15px" }}>
+                    {restArr[0].hour.start} to {restArr[0].hour.end}
+                  </h5>
+                  <h4
+                    style={{
+                      fontSize: "25px",
+                      fontFamily: "serif",
+                      marginBottom: "-5px",
+                    }}
+                  >
+                    Socials
+                  </h4>
+                  <a
+                    style={{ marginRight: "15px", textDecoration: "none" }}
+                    href={`https://www.facebook.com/`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Facebook
+                  </a>
+                  <a
+                    style={{
+                      marginRight: "15px",
+                      textDecoration: "none",
+                      color: "red",
+                    }}
+                    href={`https://www.instagram.com/?hl=en`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Instagram
+                  </a>
 
-                <a
-                  style={{ textDecoration: "none", color: "purple" }}
-                  href={`https://www.google.com/gmail/about/`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Contact
-                </a>
+                  <a
+                    style={{ textDecoration: "none", color: "purple" }}
+                    href={`https://www.google.com/gmail/about/`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Contact
+                  </a>
+                </div>
+
+                {/* <ul>
+                  {restArr[0].images.map((item) => {
+                    // <p>{item}</p>;
+                    console.log(item);
+                    <img src={item} alt="{item}"></img>;
+                    // <img src={restArr[0].images[0]} alt=" "></img>;
+                  })}
+                </ul> */}
+
+                <div>
+                  {hourOftheDay > restArr[0].hour.start &&
+                  hourOftheDay < restArr[0].hour.end ? (
+                    <div
+                      style={{
+                        color: "orange",
+                        backgroundColor: "green",
+                        height: "90px",
+                        width: "90px",
+                        display: "flex",
+                        alignItems: "center",
+                        alignContent: "center",
+                        borderRadius: "50%",
+                      }}
+                    >
+                      WE'RE OPEN!!!!!!
+                    </div>
+                  ) : (
+                    <div
+                      style={{
+                        color: "white",
+                        backgroundColor: "red",
+                        height: "90px",
+                        width: "90px",
+                        display: "flex",
+                        alignItems: "center",
+                        alignContent: "center",
+                        borderRadius: "50%",
+                      }}
+                    >
+                      CLOSED !!!
+                    </div>
+                  )}
+                </div>
+                {/* <img src={restArr[0].images[0]} alt="first pic"></img> */}
               </div>
             )}
 
@@ -241,8 +289,8 @@ const RestaurantPage = ({ google, locations = [] }) => {
                                 setCart((prevState) => [...prevState, "def"]);
                               }}
                             >
-                              {/* {showAdd ? "Add" : "Remove"} */}
-                              Add
+                              {showAdd ? "Add" : "Remove"}
+                              {/* Add */}
                             </div>
                           </div>
                         </li>
@@ -328,3 +376,22 @@ export default RestaurantPage;
 //             </a> */
 //               rel="noreferrer"
 // }
+
+// From Mentor Samyo
+// /// React
+// const [selectedItems, setSelectedItems] = useState([]);
+
+// // whenever add button is clicked
+// const handleItemAddOrRemove = (id) => {
+//   if (selectedItems.includes(id)) {
+//     // Remove
+//     const newItems = selectedItems.filter(item => item.id !== id);
+//     return setSelectedItems(newItems);
+//   }
+//   // Add
+//   setSelectedItems(...selectedItems, newItemId);
+// };
+
+// // when rendering the Button
+// const label = selectedItems.includes(menuId) ? 'Remove' : 'Add';
+// <Button onClick={handleItemAddOrRemove}>{label}</Button>

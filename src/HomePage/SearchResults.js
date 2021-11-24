@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import { Link, useParams, useHistory } from "react-router-dom";
-
 import axios from "axios";
+
+import { Link, useParams, useHistory } from "react-router-dom";
+import { SocialIcon } from "react-social-icons";
 
 export default function RestaurantList() {
   const foodName = useParams().foodName.toLowerCase();
@@ -73,17 +74,20 @@ export default function RestaurantList() {
               Back to home page
             </button>
           </Link>
-          <ul>
+          <ul style={{ marginTop: "20px" }}>
             {arr.map((item) => (
               <li
                 style={{
                   padding: "30px",
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "row",
+                  alignContent: "space-evenly",
+                  alignItems: "normal",
                   border: "solid black",
-                  borderRadius: "10%",
-                  margin: "auto 40% 24px",
-                  width: "auto",
+                  // borderRadius: "10%",
+                  margin: "auto 10% 24px",
+                  width: "400px",
+                  height: "150px",
                   backgroundColor: "lightyellow",
                   cursor: "pointer",
                 }}
@@ -93,14 +97,48 @@ export default function RestaurantList() {
                   history.push(`/restaurant/${key}`);
                 }}
               >
-                <img
-                  style={{ width: "100px", height: "100px" }}
-                  src={`${item.banner_image}`}
-                  alt={`${item.name}`}
-                />
-                <h4 style={{ marginBottom: "-20px" }}>{item.name} </h4>
-                <br />
-                {item.address.area}
+                <div>
+                  <img
+                    style={{ width: "100px", height: "100px", padding: "10px" }}
+                    src={`${item.banner_image}`}
+                    alt={`${item.name}`}
+                  />
+                </div>
+                <div>
+                  <h4 style={{ marginBottom: "-20px" }}>{item.name} </h4>
+                  <br />
+                  {item.address.area}, {item.address.district}
+                </div>
+                <div style={{ marginLeft: "100px" }}>
+                  <div
+                    style={{
+                      border: "solid",
+                      padding: "0px 3px 0px ",
+                      backgroundColor: "saddlebrown",
+                      height: "32px",
+                      width: "32px",
+                      color: "white",
+                    }}
+                  >
+                    {item.review.average.toFixed(1)}
+                  </div>
+                  <br />
+                  <div style={{ marginTop: "-25px", fontSize: "8px" }}>
+                    {item.review.count} reviews
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      marginLeft: "-70px",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <SocialIcon url="https://facebook.com/" />
+                    <SocialIcon url="https://gmail.com/" />
+                    <SocialIcon url="https://twitter.com" />
+                  </div>
+                </div>
               </li>
             ))}
           </ul>

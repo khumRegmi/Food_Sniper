@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import classes from "./app.module.css";
-import { useHistory } from "react-router";
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Container, Navbar, Nav } from "react-bootstrap";
 import { BrowserRouter, Link, Switch, Route } from "react-router-dom";
 
 import Homepage from "./HomePage/Homepage";
