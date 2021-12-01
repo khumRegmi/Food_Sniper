@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import classes from "./app.module.css";
 import { Container, Navbar, Nav } from "react-bootstrap";
 import { BrowserRouter, Link, Switch, Route } from "react-router-dom";
 
+import classes from "./app.module.css";
 import Homepage from "./HomePage/Homepage";
 import Blogs from "./Blogs/Blogs";
 import SignIn from "./Auth/SignIn";
 import UserProfile from "./Components/UserProfile";
+import Cart from "../src/Components/Cart";
 
 import SearchResults from "./HomePage/SearchResults";
 import RestaurantPage from "./Restaurant/RestaurantPage";
@@ -18,7 +19,7 @@ function App() {
   const [nameUser, setNameUser] = useState("");
   const [emailUser, setEmailUser] = useState("");
 
-  const [cart, setCart] = useState(["abc", "def"]);
+  const [cart, setCart] = useState([]);
 
   // const history = useHistory();
 
@@ -32,7 +33,7 @@ function App() {
           <Nav
             className="me-auto"
             style={{
-              marginLeft: "300px",
+              marginLeft: "100px",
               fontSize: "25px",
               textDecoration: "none",
             }}
@@ -40,9 +41,9 @@ function App() {
             <Link to="/" className={classes.link}>
               Home
             </Link>
-            <Link to="/food-photography" className={classes.link}>
+            {/* <Link to="/food-photography" className={classes.link}>
               Food Photography
-            </Link>
+            </Link> */}
             <Link to="/blogs" className={classes.link}>
               Blogs
             </Link>
@@ -51,6 +52,7 @@ function App() {
                 User Profile
               </Link>
             )}
+
             {signIn && (
               <Link
                 to="/"
@@ -60,26 +62,13 @@ function App() {
                 Sign Out
               </Link>
             )}
-            {/* {signIn && (
-              <NavDropdown
-                style={{
-                  marginTop: "-8px",
-                  marginLeft: "45px",
-                  color: "white",
-                }}
-                title="Welcome"
-              >
-                <NavDropdown.Item>
-                  <Link to="/userprofile">User Profile</Link>
-                </NavDropdown.Item>
 
-                <NavDropdown.Item>
-                  <Link to="/" onClick={() => console.log("Okay")}>
-                    Sign Out
-                  </Link>
-                </NavDropdown.Item>
-              </NavDropdown>
-            )} */}
+            {signIn && (
+              <Link to="/cart" className={classes.link}>
+                Cart
+              </Link>
+            )}
+
             {!signIn && (
               <Link to="/auth" className={classes.link}>
                 Sign In
@@ -117,6 +106,9 @@ function App() {
           </Route>
           <Route exact path="/userProfile">
             <UserProfile />
+          </Route>
+          <Route exact path="/cart">
+            <Cart />
           </Route>
         </SignInCtx.Provider>
       </Switch>

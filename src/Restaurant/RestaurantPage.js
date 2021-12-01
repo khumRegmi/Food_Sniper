@@ -1,19 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { v4 as uuid } from "uuid";
 import { useParams } from "react-router-dom";
+
 import axios from "axios";
+
 import Avatar from "react-avatar";
 import MealCard from "../UI/MealCard";
-
 import { SignInCtx } from "../App";
 
-const RestaurantPage = ({ google, locations = [] }) => {
-  const { cart, setCart } = useContext(SignInCtx);
+const RestaurantPage = () => {
+  const { cart, setCart, signIn } = useContext(SignInCtx);
+
+  // console.log(cart);
+  // console.log(signIn);
 
   const restName = useParams().key.toLowerCase();
-
-  const [addornot, setAddornot] = useState("+ Add");
 
   const [showAdd, setShowAdd] = useState(true);
 
@@ -148,104 +151,119 @@ const RestaurantPage = ({ google, locations = [] }) => {
               }}
             ></p>
             {about && (
-              <div style={{ display: "flex", flexDirection: "row" }}>
-                <div>
-                  <h4 style={{ fontSize: "25px", fontFamily: "serif" }}>
-                    Location
-                  </h4>
-                  <h5 style={{ color: "black", margin: "-10px auto 15px" }}>
-                    {restArr[0].address.area} , {restArr[0].address.district}
-                  </h5>
-                  <h4 style={{ fontSize: "25px", fontFamily: "serif" }}>
-                    Opening Hours:{" "}
-                  </h4>
-                  <h5 style={{ color: "black", margin: "-10px auto 15px" }}>
-                    {restArr[0].hour.start} to {restArr[0].hour.end}
-                  </h5>
-                  <h4
-                    style={{
-                      fontSize: "25px",
-                      fontFamily: "serif",
-                      marginBottom: "-5px",
-                    }}
-                  >
-                    Socials
-                  </h4>
-                  <a
-                    style={{ marginRight: "15px", textDecoration: "none" }}
-                    href={`https://www.facebook.com/`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Facebook
-                  </a>
-                  <a
-                    style={{
-                      marginRight: "15px",
-                      textDecoration: "none",
-                      color: "red",
-                    }}
-                    href={`https://www.instagram.com/?hl=en`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Instagram
-                  </a>
-
-                  <a
-                    style={{ textDecoration: "none", color: "purple" }}
-                    href={`https://www.google.com/gmail/about/`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Contact
-                  </a>
-                </div>
-
-                {/* <ul>
-                  {restArr[0].images.map((item) => {
-                    // <p>{item}</p>;
-                    console.log(item);
-                    <img src={item} alt="{item}"></img>;
-                    // <img src={restArr[0].images[0]} alt=" "></img>;
-                  })}
-                </ul> */}
-
-                <div>
-                  {hourOftheDay > restArr[0].hour.start &&
-                  hourOftheDay < restArr[0].hour.end ? (
-                    <div
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                  <div>
+                    <h4 style={{ fontSize: "25px", fontFamily: "serif" }}>
+                      Location
+                    </h4>
+                    <h5 style={{ color: "black", margin: "-10px auto 15px" }}>
+                      {restArr[0].address.area} , {restArr[0].address.district}
+                    </h5>
+                    <h4 style={{ fontSize: "25px", fontFamily: "serif" }}>
+                      Opening Hours:{" "}
+                    </h4>
+                    <h5 style={{ color: "black", margin: "-10px auto 15px" }}>
+                      {restArr[0].hour.start} to {restArr[0].hour.end}
+                    </h5>
+                    <h4
                       style={{
-                        color: "orange",
-                        backgroundColor: "green",
-                        height: "90px",
-                        width: "90px",
-                        display: "flex",
-                        alignItems: "center",
-                        alignContent: "center",
-                        borderRadius: "50%",
+                        fontSize: "25px",
+                        fontFamily: "serif",
+                        marginBottom: "-5px",
                       }}
                     >
-                      WE'RE OPEN!!!!!!
-                    </div>
-                  ) : (
-                    <div
-                      style={{
-                        color: "white",
-                        backgroundColor: "red",
-                        height: "90px",
-                        width: "90px",
-                        display: "flex",
-                        alignItems: "center",
-                        alignContent: "center",
-                        borderRadius: "50%",
-                      }}
+                      Socials
+                    </h4>
+                    <a
+                      style={{ marginRight: "15px", textDecoration: "none" }}
+                      href={`https://www.facebook.com/`}
+                      target="_blank"
+                      rel="noreferrer"
                     >
-                      CLOSED !!!
-                    </div>
-                  )}
+                      Facebook
+                    </a>
+                    <a
+                      style={{
+                        marginRight: "15px",
+                        textDecoration: "none",
+                        color: "red",
+                      }}
+                      href={`https://www.instagram.com/?hl=en`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Instagram
+                    </a>
+
+                    <a
+                      style={{ textDecoration: "none", color: "purple" }}
+                      href={`https://www.google.com/gmail/about/`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Contact
+                    </a>
+                  </div>
+
+                  <div>
+                    {hourOftheDay > parseInt(restArr[0].hour.start) &&
+                    hourOftheDay < parseInt(restArr[0].hour.end) + 12 ? (
+                      <div
+                        style={{
+                          color: "orange",
+                          backgroundColor: "green",
+                          height: "90px",
+                          width: "90px",
+                          display: "flex",
+                          alignItems: "center",
+                          alignContent: "center",
+                          borderRadius: "30%",
+                          marginLeft: "100px",
+                        }}
+                      >
+                        WE'RE OPEN!!!!!!
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          color: "white",
+                          backgroundColor: "red",
+                          height: "90px",
+                          width: "90px",
+                          display: "flex",
+                          alignItems: "center",
+                          alignContent: "center",
+                          borderRadius: "30%",
+                          marginLeft: "100px",
+                        }}
+                      >
+                        CLOSED !!!
+                      </div>
+                    )}
+                  </div>
                 </div>
-                {/* <img src={restArr[0].images[0]} alt="first pic"></img> */}
+                <div>
+                  <div>
+                    <h1
+                      style={{ marginTop: "25px", backgroundColor: "darkcyan" }}
+                    >
+                      Gallery
+                    </h1>
+                    {restArr[0].images.map((item) => (
+                      <img
+                        style={{
+                          height: "200px",
+                          width: "300px",
+                          padding: "10px",
+                        }}
+                        src={item}
+                        alt={"restaurant customer pictures"}
+                        key={item}
+                      ></img>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
 
@@ -268,37 +286,51 @@ const RestaurantPage = ({ google, locations = [] }) => {
                               backgroundColor: "chocolate",
                             }}
                           >
-                            <div style={{ width: "400px" }}>
+                            <div style={{ width: "200px" }}>
                               <h5>{item.name} </h5>
                               <h6> ${item.unit_price} </h6>
                             </div>
-                            <div
-                              style={{
-                                width: "60px",
-                                height: "40px",
-                                border: "solid, black",
-                                backgroundColor: "white",
-                                borderRadius: "15px",
-                                cursor: "pointer",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                              }}
-                              // onClick={() => setShowAdd(!showAdd)}
-                              onClick={() => {
-                                setCart((prevState) => [...prevState, "def"]);
-                              }}
-                            >
-                              {showAdd ? "Add" : "Remove"}
-                              {/* Add */}
-                            </div>
+
+                            {signIn && (
+                              <div
+                                style={{
+                                  width: "60px",
+                                  height: "40px",
+                                  border: "solid, black",
+                                  backgroundColor: "white",
+                                  borderRadius: "15px",
+                                  cursor: "pointer",
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                }}
+                                // onClick={() => setShowAdd(!showAdd)}
+                                onClick={() => {
+                                  alert(
+                                    `${item.name} has been added to your cart`
+                                  );
+                                  setCart((prevState) => [
+                                    ...prevState,
+                                    {
+                                      key: uuid(),
+                                      itemName: item["name"],
+                                      price: item["unit_price"],
+                                    },
+                                  ]);
+                                }}
+                              >
+                                {showAdd ? "Add" : "Remove"}
+                              </div>
+                            )}
                           </div>
                         </li>
                       ))}
                     </ul>
-                    <button type="submit">
-                      <Link to="/cart"> Go to Cart </Link>
-                    </button>
+                    {signIn && (
+                      <button type="submit">
+                        <Link to="/cart"> Go to Cart </Link>
+                      </button>
+                    )}
                   </MealCard>
                 </form>
               </div>
@@ -322,14 +354,13 @@ const RestaurantPage = ({ google, locations = [] }) => {
                       style={{
                         border: "solid ",
                         marginBottom: "10px",
-                        borderRadius: "15px",
                       }}
                     >
                       <div
                         style={{
                           display: "flex",
                           flexDirection: "row",
-                          padding: "10px",
+                          padding: "5px",
                         }}
                       >
                         <Avatar
