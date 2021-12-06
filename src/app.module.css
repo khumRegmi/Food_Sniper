@@ -1,11 +1,14 @@
 .nav {
+  display: flex;
   justify-content: space-between;
 }
 
 .link {
   text-decoration: none;
   color: white;
-  margin-left: 45px;
+  margin-left: 40px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .link:hover {

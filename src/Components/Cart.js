@@ -3,7 +3,7 @@ import React, { useState, useContext } from "react";
 import { SignInCtx } from "../App";
 
 export default function Cart() {
-  const { cart } = useContext(SignInCtx);
+  const { cart, setCart } = useContext(SignInCtx);
 
   let totalAmount = 0;
 
@@ -22,6 +22,7 @@ export default function Cart() {
   const submitHandler = () => setCheckOut(true);
 
   const handleOrderSubmit = () => {
+    setCart([]);
     alert(`${name}, your order is successful. Thank you!`);
   };
 

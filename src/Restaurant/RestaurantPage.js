@@ -286,9 +286,12 @@ const RestaurantPage = () => {
                               backgroundColor: "chocolate",
                             }}
                           >
-                            <div style={{ width: "200px" }}>
+                            <div style={{ width: "200px", height: "30px" }}>
                               <h5>{item.name} </h5>
-                              <h6> ${item.unit_price} </h6>
+                              <h6 style={{ marginTop: "-10px" }}>
+                                {" "}
+                                ${item.unit_price}{" "}
+                              </h6>
                             </div>
 
                             {signIn && (
@@ -373,7 +376,6 @@ const RestaurantPage = () => {
                               ? "No Name"
                               : item.userId.username
                           }
-                          // name="Khum Regmi"
                         />
                         <h4 style={{ color: "red", marginLeft: "10px" }}>
                           {item.userId === null

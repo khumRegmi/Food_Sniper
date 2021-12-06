@@ -56,6 +56,7 @@ export default function Homepage() {
         flexDirection: "row",
         justifyContent: "space-evenly",
         marginTop: "20px",
+        minWidth: "50%",
       }}
     >
       <img src={foodSniper} alt="theme logo" />
@@ -72,7 +73,7 @@ export default function Homepage() {
               style={{
                 height: "40px",
                 borderRadius: "15px 0px 0px 15px",
-                width: "400px",
+                // width: "400px",
                 marginRight: "20px",
               }}
               value={foodName}
