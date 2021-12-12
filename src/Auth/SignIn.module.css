@@ -21,14 +21,14 @@
 .userName,
 .password {
   margin-top: 10%;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .button {
   background-color: darkgreen;
   width: fit-content;
   display: flex;
-  margin: 35px 0px 35px 270px;
+  margin: 35px 0px 35px 70px;
 }
 
 .signup {

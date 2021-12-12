@@ -1,0 +1,101 @@
+.offerTitle {
+  font-size: 25px;
+  font-family: cursive;
+  text-align: center;
+  color: sienna;
+  margin-top: 20px;
+}
+
+.div {
+  display: flex;
+  flex-direction: row;
+  width: auto;
+}
+
+.imageSize1 {
+  margin-left: 20px;
+  height: 100vh;
+  width: 100vh;
+  padding: 5px;
+}
+
+.imageSize2 {
+  height: 50vh;
+  width: 50vh;
+  padding: 5px;
+}
+
+/* .text1 {
+  color: red;
+  margin-left: 10px;
+  font-size: 28pt;
+} */
+
+/* .text2 {
+  color: red;
+  margin-left: 10px;
+  font-size: 14pt;
+} */
+
+.h2Text {
+  font-size: 10pt;
+}
+
+.card1 {
+  width: auto;
+  height: fit-content;
+}
+
+.card2 {
+  width: auto;
+  height: fit-content;
+}
+
+.img {
+  width: 100px;
+  height: 100px;
+  margin: 20px 20px;
+  margin-bottom: initial;
+}
+
+.items {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+}
+
+.label {
+  margin-left: 50px;
+  font-size: 1rem;
+}
+
+.bg {
+  background-color: khaki;
+  width: fit-content;
+  margin-left: 100px;
+}
+
+/* Blogs */
+
+.blogtitle {
+  text-align: center;
+  font-size: 25pt;
+  font-family: cursive;
+  margin-top: 100px;
+  background-color: lightcoral;
+}
+.divBlogs {
+  display: flex;
+  flex-direction: row;
+}
+
+.imgSize {
+  height: 250px;
+  width: 370px;
+  /* padding: 30px; */
+}
+
+.para {
+  font-size: 13pt;
+  color: rgb(255, 0, 0);
+}

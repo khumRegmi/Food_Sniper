@@ -52,13 +52,16 @@ export default function SignIn() {
       userInfo.confirmPasswordIn === ""
     ) {
       alert("All fields should be filled");
+      return;
     }
     if (userInfo.passwordIn !== userInfo.confirmPasswordIn) {
       alert("Passwords do not match");
+      return;
     }
 
     if (!validateEmail(userInfo.emailAddr)) {
       alert("Incrrect Email");
+      return;
     }
     axios
       .post(`https://foodhub-api.herokuapp.com/auth/register`, {
@@ -77,6 +80,10 @@ export default function SignIn() {
   };
 
   const loginHandler = () => {
+    if (!logininfo.loginName || !logininfo.loginPassword) {
+      alert("USername or password can not be empty");
+      return;
+    }
     axios
       .post(`https://foodhub-api.herokuapp.com/auth/login`, {
         username: logininfo.loginName,
@@ -144,7 +151,10 @@ export default function SignIn() {
               Login
             </button>
           </div>
-          <div className={classes.signup} style={{ height: "450px" }}>
+          <div
+            className={classes.signup}
+            style={{ height: "450px", marginTop: "55px" }}
+          >
             <input
               className={classes.userName}
               placeholder="Name"
@@ -177,7 +187,7 @@ export default function SignIn() {
             <button
               className={classes.button}
               type="submit"
-              style={{ marginLeft: "187px" }}
+              style={{ marginLeft: "95px" }}
               onClick={signinHandler}
             >
               Signup

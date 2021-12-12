@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 
 import { SignInCtx } from "../App";
 
+import OffersandBlogs from "./OffersandBlogs";
 import Card from "../UI/Card";
 import foodSniper from "./assets/foodSniper.png";
 import { Button } from "react-bootstrap";
@@ -53,68 +54,80 @@ export default function Homepage() {
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        marginTop: "20px",
-        minWidth: "50%",
+        flexDirection: "column",
       }}
     >
-      <img src={foodSniper} alt="theme logo" />
-      <Card>
-        <div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              marginTop: "200px",
-            }}
-          >
-            <input
-              style={{
-                height: "40px",
-                borderRadius: "15px 0px 0px 15px",
-                // width: "400px",
-                marginRight: "20px",
-              }}
-              value={foodName}
-              placeholder="Search by Food"
-              onClick={onSearchClick}
-              onChange={foodNameHandler}
-            ></input>
-            <input
-              style={{
-                borderRadius: "0px 15px 15px 0px",
-                width: "250px",
-                marginRoght: "15px",
-              }}
-              placeholder="Location"
-            ></input>
-
-            <button onClick={handleSubmit} style={{ borderRadius: "50%" }}>
-              <FaSearch />
-            </button>
-          </div>
-          {showSuggestions && (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          marginTop: "20px",
+          minWidth: "50%",
+        }}
+      >
+        <img
+          style={{ height: "300px", width: "300px" }}
+          src={foodSniper}
+          alt="theme logo"
+        />
+        <Card>
+          <div>
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
-                width: "400px",
+                flexDirection: "row",
+                marginTop: "16%",
               }}
             >
-              <Button style={btnStyles} onClick={callthis1}>
-                Pizza
-              </Button>
-              <Button style={btnStyles} onClick={callthis2}>
-                Burger
-              </Button>
-              <Button style={btnStyles} onClick={callthis3}>
-                Biryani
-              </Button>
+              <input
+                style={{
+                  height: "40px",
+                  borderRadius: "15px 0px 0px 15px",
+                  width: "400px",
+                }}
+                value={foodName}
+                placeholder="Search by Food"
+                onClick={onSearchClick}
+                onChange={foodNameHandler}
+              ></input>
+              <input
+                style={{
+                  borderRadius: "0px 15px 15px 0px",
+                  width: "250px",
+                  marginRoght: "15px",
+                }}
+                placeholder="Location"
+              ></input>
+
+              <button onClick={handleSubmit} style={{ borderRadius: "50%" }}>
+                <FaSearch />
+              </button>
             </div>
-          )}
-        </div>
-      </Card>
+            {showSuggestions && (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "400px",
+                }}
+              >
+                <Button style={btnStyles} onClick={callthis1}>
+                  Pizza
+                </Button>
+                <Button style={btnStyles} onClick={callthis2}>
+                  Burger
+                </Button>
+                <Button style={btnStyles} onClick={callthis3}>
+                  Biryani
+                </Button>
+              </div>
+            )}
+          </div>
+        </Card>
+      </div>
+      <br />
+      <OffersandBlogs />
     </div>
   );
 }

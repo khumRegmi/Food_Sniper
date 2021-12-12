@@ -3,12 +3,24 @@ import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import { useParams } from "react-router-dom";
+import { Checkmark } from "react-checkmark";
 
 import axios from "axios";
 
+import img from "./assets/cross_icon.png";
 import Avatar from "react-avatar";
 import MealCard from "../UI/MealCard";
 import { SignInCtx } from "../App";
+
+const Crossmark = () => {
+  return (
+    <img
+      src={img}
+      alt={"cross icon"}
+      style={{ height: "20px", width: "20px", borderRadius: "10px" }}
+    ></img>
+  );
+};
 
 const RestaurantPage = () => {
   const { cart, setCart, signIn } = useContext(SignInCtx);
@@ -89,6 +101,12 @@ const RestaurantPage = () => {
     setReview(true);
   };
 
+  const restFeatures = {
+    display: "flex",
+    flexDirection: "row",
+    marginTop: "-8px",
+  };
+
   return (
     <div>
       {isLoading && <h1>Page is laoding</h1>}
@@ -161,7 +179,7 @@ const RestaurantPage = () => {
                       {restArr[0].address.area} , {restArr[0].address.district}
                     </h5>
                     <h4 style={{ fontSize: "25px", fontFamily: "serif" }}>
-                      Opening Hours:{" "}
+                      Opening Hours:
                     </h4>
                     <h5 style={{ color: "black", margin: "-10px auto 15px" }}>
                       {restArr[0].hour.start} to {restArr[0].hour.end}
@@ -204,6 +222,216 @@ const RestaurantPage = () => {
                     >
                       Contact
                     </a>
+
+                    <div>
+                      <h1
+                        style={{
+                          marginTop: "25px",
+                          backgroundColor: "darkcyan",
+                          textAlign: "center",
+                          fontFamily: "fantasy",
+                          width: "208%",
+                        }}
+                      >
+                        Features
+                      </h1>
+                      <div>
+                        <div>
+                          {restArr[0].features.delivery ? (
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                              }}
+                            >
+                              <p
+                                style={{
+                                  width: "110px",
+                                  marginRight: "-100px",
+                                  textAlign: "right",
+                                }}
+                              >
+                                Delivery
+                              </p>
+                              <Checkmark size="20px" />
+                            </div>
+                          ) : (
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                              }}
+                            >
+                              <p style={{ width: "110px", textAlign: "right" }}>
+                                Delivery
+                              </p>
+                              <Crossmark />
+                            </div>
+                          )}
+                          {restArr[0].features.ac ? (
+                            <div style={restFeatures}>
+                              <p
+                                style={{
+                                  width: "110px",
+                                  marginRight: "-100px",
+                                  textAlign: "right",
+                                }}
+                              >
+                                AC
+                              </p>
+                              <Checkmark size="20px" />
+                            </div>
+                          ) : (
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                              }}
+                            >
+                              <p
+                                style={{
+                                  width: "110px",
+                                  marginTop: "-8px",
+                                  textAlign: "right",
+                                }}
+                              >
+                                AC{" "}
+                              </p>
+                              <Crossmark />
+                            </div>
+                          )}
+                          {restArr[0].features.wifi ? (
+                            <div style={restFeatures}>
+                              <p
+                                style={{
+                                  width: "110px",
+                                  marginRight: "-100px",
+                                  textAlign: "right",
+                                }}
+                              >
+                                Wifi
+                              </p>
+                              <Checkmark size="20px" />
+                            </div>
+                          ) : (
+                            <div
+                              style={{ display: "flex", flexDirection: "row" }}
+                            >
+                              <p
+                                style={{
+                                  width: "110px",
+                                  marginTop: "-8px",
+                                  textAlign: "right",
+                                }}
+                              >
+                                Wifi{" "}
+                              </p>
+                              <Crossmark />
+                            </div>
+                          )}
+                          {restArr[0].features.smoking_zone ? (
+                            <div style={restFeatures}>
+                              <p
+                                style={{
+                                  width: "110px",
+                                  marginRight: "-100px",
+                                  textAlign: "right",
+                                }}
+                              >
+                                Smoking Zone
+                              </p>
+                              <Checkmark size="20px" />
+                            </div>
+                          ) : (
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                              }}
+                            >
+                              <p
+                                style={{
+                                  marginTop: "-8px",
+                                  textAlign: "right",
+                                }}
+                              >
+                                Smoking Zone{" "}
+                              </p>
+                              <Crossmark />
+                            </div>
+                          )}
+                          {restArr[0].features.reservation ? (
+                            <div style={restFeatures}>
+                              <p
+                                style={{
+                                  width: "110px",
+                                  marginRight: "-100px",
+                                  textAlign: "right",
+                                }}
+                              >
+                                Reservations
+                              </p>
+                              <Checkmark size="20px" />
+                            </div>
+                          ) : (
+                            <div
+                              style={{ display: "flex", flexDirection: "row" }}
+                            >
+                              <p
+                                style={{
+                                  width: "110px",
+                                  marginTop: "-8px",
+                                  textAlign: "right",
+                                }}
+                              >
+                                Reservations{" "}
+                              </p>
+                              <Crossmark />
+                            </div>
+                          )}
+                          {restArr[0].features.parking ? (
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                marginTop: "-8px",
+                              }}
+                            >
+                              <p
+                                style={{
+                                  width: "110px",
+                                  marginRight: "-100px",
+                                  textAlign: "right",
+                                }}
+                              >
+                                Parking
+                              </p>
+                              <Checkmark size="20px" />
+                            </div>
+                          ) : (
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                              }}
+                            >
+                              <p
+                                style={{
+                                  width: "110px",
+                                  marginTop: "-8px",
+                                  textAlign: "right",
+                                }}
+                              >
+                                Parking
+                              </p>
+                              <Crossmark />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* {restArr[0].restaurant_type[0]} */}
                   </div>
 
                   <div>
@@ -246,7 +474,12 @@ const RestaurantPage = () => {
                 <div>
                   <div>
                     <h1
-                      style={{ marginTop: "25px", backgroundColor: "darkcyan" }}
+                      style={{
+                        marginTop: "25px",
+                        backgroundColor: "darkcyan",
+                        textAlign: "center",
+                        fontFamily: "fantasy",
+                      }}
                     >
                       Gallery
                     </h1>
@@ -290,7 +523,7 @@ const RestaurantPage = () => {
                               <h5>{item.name} </h5>
                               <h6 style={{ marginTop: "-10px" }}>
                                 {" "}
-                                ${item.unit_price}{" "}
+                                ${(item.unit_price / 25).toFixed(2)}{" "}
                               </h6>
                             </div>
 
@@ -345,6 +578,17 @@ const RestaurantPage = () => {
 
             {review && !reviewLoading && (
               <div>
+                <div
+                  style={{
+                    textAlign: "right",
+                    display: "flex",
+                    flexDirection: "column",
+                    fontFamily: "monospace",
+                  }}
+                >
+                  <h3> {restArr[0].review.average.toFixed(2)}/5 </h3>
+                  <h4> {restArr[0].review.count} customer ratings </h4>
+                </div>
                 <ul
                   style={{
                     backgroundColor: "lightblue",
