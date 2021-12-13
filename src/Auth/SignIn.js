@@ -7,7 +7,8 @@ import { useHistory } from "react-router";
 
 export default function SignIn() {
   const history = useHistory();
-  const { setSignIn, setNameUser, setEmailUser } = useContext(SignInCtx);
+  const { setSignIn, setNameUser, setEmailUser, setAuthUserId } =
+    useContext(SignInCtx);
 
   const [hasAccount, setHasAccount] = useState(true);
 
@@ -93,6 +94,7 @@ export default function SignIn() {
         console.log(resp.data);
         setNameUser(resp.data.data.username);
         setEmailUser(resp.data.data.email);
+        setAuthUserId(resp.data.data._id);
         setSignIn(true);
       });
     history.push("/");

@@ -18,6 +18,7 @@ function App() {
   const [signIn, setSignIn] = useState(false);
   const [nameUser, setNameUser] = useState("");
   const [emailUser, setEmailUser] = useState("");
+  const [authUserId, setAuthUserId] = useState("");
 
   const [cart, setCart] = useState([]);
 
@@ -83,6 +84,8 @@ function App() {
           value={{
             signIn,
             setSignIn,
+            authUserId,
+            setAuthUserId,
             nameUser,
             setNameUser,
             emailUser,

@@ -2,11 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { v4 as uuid } from "uuid";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Checkmark } from "react-checkmark";
+import { Rating } from "react-simple-star-rating";
 
 import axios from "axios";
 
+import Review from "../Components/Review";
+import Modal from "../Components/Modal";
 import img from "./assets/cross_icon.png";
 import Avatar from "react-avatar";
 import MealCard from "../UI/MealCard";
@@ -23,11 +26,12 @@ const Crossmark = () => {
 };
 
 const RestaurantPage = () => {
-  const { cart, setCart, signIn } = useContext(SignInCtx);
+  const { cart, setCart, signIn, authUserId } = useContext(SignInCtx);
 
   // console.log(cart);
   // console.log(signIn);
 
+  const history = useHistory();
   const restName = useParams().key.toLowerCase();
 
   const [showAdd, setShowAdd] = useState(true);
@@ -41,7 +45,18 @@ const RestaurantPage = () => {
 
   const [restArr, setRestArr] = useState([]);
   const [reviews, setReviews] = useState([]);
-  const [userNames, setUserNames] = useState([]);
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const [rateFood, setRateFood] = useState(0);
+  const [rateEnv, setRateEnv] = useState(0);
+  const [rateService, setRateService] = useState(0);
+  const [ratePrice, setRatePrice] = useState(0);
+  const [comment, setComment] = useState("");
+
+  const commentHandler = (event) => {
+    setComment(event.target.value);
+  };
 
   var today = new Date();
   var hourOftheDay = today.getHours();
@@ -53,19 +68,6 @@ const RestaurantPage = () => {
         setRestArr([resp.data.data]);
         setIsLoading(false);
       });
-
-    // axios
-    //   .get(
-    //     `https://foodhub-api.herokuapp.com/restaurant/review/${restArr[0]._id}`
-    //   )
-    //   .then((resp) => {
-    //     setReviews([...resp.data.data]);
-    //     // console.log(
-    //     //   resp.data.data.map((item) => console.log(item.userId.username))
-    //     // );
-    //     // console.log(reviews);
-    //     setReviewLoading(false);
-    //   });
   }, []);
 
   useEffect(() => {
@@ -101,10 +103,54 @@ const RestaurantPage = () => {
     setReview(true);
   };
 
+  const handlePriceRating = (rate) => {
+    setRatePrice(rate / 20);
+  };
+
+  const handleServiceRating = (rate) => {
+    setRateService(rate / 20);
+  };
+
+  const handleFoodRating = (rate) => {
+    setRateFood(rate / 20);
+  };
+
+  const handleEnvironmentRating = (rate) => {
+    setRateEnv(rate / 20);
+  };
+
   const restFeatures = {
     display: "flex",
     flexDirection: "row",
     marginTop: "-8px",
+  };
+
+  const submitReviewHandler = () => {
+    console.log("Review is submitted");
+    console.log(
+      authUserId,
+      rateFood,
+      rateEnv,
+      ratePrice,
+      rateService,
+      comment,
+      restArr[0]._id
+    );
+    axios
+      .post(
+        `https://foodhub-api.herokuapp.com/restaurant/review/${restArr[0]._id}`,
+        {
+          userId: authUserId,
+          food: rateFood,
+          service: rateService,
+          environment: rateEnv,
+          price: ratePrice,
+          comment: comment,
+        }
+      )
+      .then((resp) => console.log(resp.data));
+    setModalOpen(!modalOpen);
+    history.push(`/restaurant/${restArr[0]._id}`);
   };
 
   return (
@@ -430,8 +476,6 @@ const RestaurantPage = () => {
                         </div>
                       </div>
                     </div>
-
-                    {/* {restArr[0].restaurant_type[0]} */}
                   </div>
 
                   <div>
@@ -540,7 +584,6 @@ const RestaurantPage = () => {
                                   justifyContent: "center",
                                   alignItems: "center",
                                 }}
-                                // onClick={() => setShowAdd(!showAdd)}
                                 onClick={() => {
                                   alert(
                                     `${item.name} has been added to your cart`
@@ -578,6 +621,120 @@ const RestaurantPage = () => {
 
             {review && !reviewLoading && (
               <div>
+                <Modal
+                  open={modalOpen}
+                  // onClose={() => setModalOpen(!modalOpen)}
+                >
+                  <button
+                    onClick={() => setModalOpen(false)}
+                    style={{
+                      backgroundColor: "lightcoral",
+                      borderRadius: "10px",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    Go back
+                  </button>
+                  <form>
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <h3
+                        style={{
+                          fontFamily: "initial",
+                          marginBottom: "-10px",
+                          width: "160px",
+                        }}
+                      >
+                        Food
+                      </h3>
+                      <Rating
+                        onClick={handleFoodRating}
+                        ratingValue={rateFood}
+                      />
+                    </div>
+                    <hr />
+
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <h3
+                        style={{
+                          fontFamily: "initial",
+                          marginBottom: "-10px",
+                          width: "160px",
+                        }}
+                      >
+                        Environment
+                      </h3>
+                      <Rating
+                        onClick={handleEnvironmentRating}
+                        ratingValue={rateEnv}
+                      />
+                    </div>
+
+                    <hr />
+
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <h3
+                        style={{
+                          fontFamily: "initial",
+                          marginBottom: "-10px",
+                          width: "160px",
+                        }}
+                      >
+                        Service
+                      </h3>
+                      <Rating
+                        onClick={handleServiceRating}
+                        ratingValue={rateService}
+                      />
+                    </div>
+
+                    <hr />
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <h3
+                        style={{
+                          fontFamily: "initial",
+                          marginBottom: "-10px",
+                          width: "160px",
+                        }}
+                      >
+                        Price
+                      </h3>
+                      <Rating
+                        onClick={handlePriceRating}
+                        ratingValue={ratePrice}
+                      />
+                    </div>
+
+                    <hr />
+                    <h3 style={{ fontFamily: "initial", marginBottom: "auto" }}>
+                      Comments
+                    </h3>
+
+                    <textarea
+                      type="text"
+                      style={{ width: "400px", height: "100px" }}
+                      value={comment}
+                      onChange={commentHandler}
+                    ></textarea>
+                    <br />
+                    <input
+                      type="submit"
+                      style={{ backgroundColor: "green", marginTop: "20px" }}
+                      value="Submit Review"
+                      onClick={submitReviewHandler}
+                    />
+                  </form>
+                </Modal>
+
+                <button
+                  style={{
+                    backgroundColor: "orange",
+                    width: "200px",
+                    borderRadius: "10px",
+                  }}
+                  onClick={() => setModalOpen(true)}
+                >
+                  Add Review
+                </button>
                 <div
                   style={{
                     textAlign: "right",
