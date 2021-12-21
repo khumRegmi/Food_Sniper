@@ -546,7 +546,26 @@ const RestaurantPage = () => {
 
             {menu && (
               <div>
-                <h2>Here is our list of items:</h2>
+                {!signIn && <p>Please signin to place an order. Thank you!</p>}
+                {signIn && (
+                  <button
+                    type="submit"
+                    style={{
+                      display: "flex",
+                      alignContent: "end",
+                      color: "blue",
+                      backgroundColor: "lightgreen",
+                      textDecoration: "none",
+                      marginLeft: "80%",
+                    }}
+                  >
+                    <Link style={{ textDecoration: "none" }} to="/cart">
+                      {" "}
+                      Go to Cart{" "}
+                    </Link>
+                  </button>
+                )}
+                <h2>Here is list of our items:</h2>
                 <form>
                   <MealCard>
                     <ul>
@@ -558,14 +577,24 @@ const RestaurantPage = () => {
                               flexDirection: "row",
                               justifyContent: "space-between",
                               padding: "20px",
-                              border: "solid lightyellow",
+                              // border: "solid lightyellow",
+                              border: "none",
                               borderRadius: "20px",
-                              backgroundColor: "chocolate",
+                              // backgroundColor: "chocolate",
+                              borderTop: "3px dotted ",
                             }}
                           >
-                            <div style={{ width: "200px", height: "30px" }}>
-                              <h5>{item.name} </h5>
-                              <h6 style={{ marginTop: "-10px" }}>
+                            <div style={{ width: "300px", height: "30px" }}>
+                              <h5 style={{ fontFamily: "cursive" }}>
+                                {item.name}{" "}
+                              </h5>
+                              <h6
+                                style={{
+                                  marginTop: "-10px",
+                                  fontFamily: "monospace",
+                                  marginLeft: "80%",
+                                }}
+                              >
                                 {" "}
                                 ${(item.unit_price / 25).toFixed(2)}{" "}
                               </h6>
@@ -575,14 +604,14 @@ const RestaurantPage = () => {
                               <div
                                 style={{
                                   width: "60px",
-                                  height: "40px",
+                                  height: "30px",
                                   border: "solid, black",
-                                  backgroundColor: "white",
+                                  backgroundColor: "red",
                                   borderRadius: "15px",
                                   cursor: "pointer",
                                   display: "flex",
                                   justifyContent: "center",
-                                  alignItems: "center",
+                                  // alignItems: "center",
                                 }}
                                 onClick={() => {
                                   alert(
@@ -598,18 +627,19 @@ const RestaurantPage = () => {
                                   ]);
                                 }}
                               >
-                                {showAdd ? "Add" : "Remove"}
+                                <p
+                                  style={{
+                                    marginTop: "2px",
+                                  }}
+                                >
+                                  Add
+                                </p>
                               </div>
                             )}
                           </div>
                         </li>
                       ))}
                     </ul>
-                    {signIn && (
-                      <button type="submit">
-                        <Link to="/cart"> Go to Cart </Link>
-                      </button>
-                    )}
                   </MealCard>
                 </form>
               </div>
