@@ -18,7 +18,7 @@ export default function Homepage() {
 
   //set food names
   const callthis1 = () => {
-    setFoodName("piza");
+    setFoodName("Pizza");
   };
   const callthis2 = () => {
     setFoodName("Burger");
