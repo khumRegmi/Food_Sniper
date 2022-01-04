@@ -40,40 +40,32 @@ function App() {
             }}
           >
             <Link to="/" className={classes.link}>
-              Home
+              HOME
             </Link>
-            {/* <Link to="/food-photography" className={classes.link}>
-              Food Photography
-            </Link> */}
             <Link to="/blogs" className={classes.link}>
-              Blogs
+              BLOGS
             </Link>
-            {signIn && (
-              <Link to="/userprofile" className={classes.link}>
-                User Profile
-              </Link>
-            )}
-
-            {signIn && (
-              <Link
-                to="/"
-                className={classes.link}
-                onClick={() => setSignIn(false)}
-              >
-                Sign Out
-              </Link>
-            )}
-
-            {signIn && (
-              <Link to="/cart" className={classes.link}>
-                Cart
-              </Link>
-            )}
-
             {!signIn && (
               <Link to="/auth" className={classes.link}>
-                Sign In
+                SIGN IN
               </Link>
+            )}
+            {signIn && (
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <Link to="/userprofile" className={classes.link}>
+                  USER PROFILE
+                </Link>
+                <Link
+                  to="/"
+                  className={classes.link}
+                  onClick={() => setSignIn(false)}
+                >
+                  SIGN OUT
+                </Link>
+                <Link to="/cart" className={classes.link}>
+                  CART
+                </Link>
+              </div>
             )}
           </Nav>
         </Container>

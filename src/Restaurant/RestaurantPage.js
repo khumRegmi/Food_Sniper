@@ -32,7 +32,7 @@ const RestaurantPage = () => {
   // console.log(signIn);
 
   const history = useHistory();
-  const restName = useParams().key.toLowerCase();
+  const restId = useParams().key.toLowerCase();
 
   const [showAdd, setShowAdd] = useState(true);
 
@@ -63,7 +63,7 @@ const RestaurantPage = () => {
 
   useEffect(() => {
     axios
-      .get(`https://foodhub-api.herokuapp.com/restaurant/details/${restName}`)
+      .get(`https://foodhub-api.herokuapp.com/restaurant/details/${restId}`)
       .then((resp) => {
         setRestArr([resp.data.data]);
         setIsLoading(false);

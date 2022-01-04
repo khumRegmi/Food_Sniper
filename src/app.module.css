@@ -5,6 +5,8 @@
 
 .link {
   text-decoration: none;
+  font-size: medium;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   color: white;
   margin-left: 40px;
   display: flex;
