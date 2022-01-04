@@ -1,6 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import axios from "axios";
-import FeaturedRestaurants from "./FeaturedRestaurants";
 
 import { SignInCtx } from "../App";
 
@@ -71,9 +69,9 @@ export default function Homepage() {
       banner: "https://i.imgur.com/6xgQ3Nx.jpg",
     },
     {
-      name: "Kazi Foods",
-      id: "5cc1fb51df245c427cc26652",
-      banner: "https://i.imgur.com/Coiqzkr.jpg",
+      name: "Mumin Foods",
+      id: "5cc1fd33df245c427cc26655",
+      banner: "https://i.imgur.com/NEL6Gvt.jpg",
     },
   ]);
 
@@ -106,6 +104,7 @@ export default function Homepage() {
           marginTop: "20px",
           minWidth: "50%",
           backgroundImage: `url(${logo})`,
+          boxShadow: "inset 0 0 100px 10px #282a2d",
         }}
       >
         <img
@@ -174,26 +173,33 @@ export default function Homepage() {
 
       <div>
         <h1 style={title}>Featured Restaurants</h1>
-        <div style={{ display: "flex", flexDirection: "row" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            padding: "10px",
+            margin: "20px",
+          }}
+        >
           {featuredArr.map((item) => (
             <div
               style={{
                 border: "solid",
-                justifyContent: "space-between",
+                margin: "0px 20px",
               }}
             >
               <img
                 style={{
                   height: "150px",
                   width: "230px",
-                  padding: "10px",
+                  cursor: "pointer",
                 }}
                 src={item.banner}
                 alt={"restaurant banner pictures"}
                 key={item}
-                // onClick={history.push(`/restaurant/${item.id}`)}
+                value={item.id}
+                onClick={() => history.push(`/restaurant/${item.id}`)}
               ></img>
-              <p>{item.name}</p>
             </div>
           ))}
         </div>

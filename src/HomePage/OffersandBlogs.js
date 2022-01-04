@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import Card from "./Card";
 import classes from "./OffersandBlogs.module.css";
 
@@ -60,10 +61,12 @@ const OffersandBlogs = () => {
     marginRight: "10px",
   };
 
+  const history = useHistory();
+
   return (
     <div style={{ width: "100vh", minWidth: "100vh" }}>
+      <h1 style={title}>Featured Items</h1>
       <Card className={classes.bg}>
-        {/* <ul className={classes.items}> */}
         <div
           style={{
             marginLeft: "-10px",
@@ -73,12 +76,14 @@ const OffersandBlogs = () => {
           }}
         >
           {arr.map((item) => (
-            // <li key={item.label}>
             <div key={item.label}>
               <img
                 className={classes.img}
                 src={item.image}
                 alt={item.label}
+                onClick={() =>
+                  history.push(`/searchResults/${item.label.toLowerCase()}`)
+                }
               ></img>
               <h3 className={classes.label}>{item.label}</h3>
             </div>
