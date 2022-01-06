@@ -9,9 +9,7 @@ import offer2 from "./assets/Offers/offer2.jpeg";
 import Profile from "./Profile";
 
 import pic from "./assets/Profile/EmailPP.jpg";
-import item1 from "./assets/Blogs/Chicken-soup.jpeg";
-import item2 from "./assets/Blogs/Chipotle.jpeg";
-import item3 from "./assets/Blogs/Chicken-seekh.jpg";
+
 import burger from "./assets/Burger.jpg";
 import pizza from "./assets/Pizza.jpg";
 import coffee from "./assets/Coffee.jpg";
@@ -141,7 +139,11 @@ const OffersandBlogs = () => {
         <h1 style={title}>Top Blogs Today</h1>
         <div className={classes.divBlogs}>
           <div style={entireBlog}>
-            <img className={classes.imgSize} src={item1} alt="item1" />
+            <img
+              className={classes.imgSize}
+              src={"https://i.ibb.co/7zjjjc7/Chicken-soup.jpg"}
+              alt="item1"
+            />
             <div>
               <p className={classes.para}>
                 Hands down. Best Ckicken soup in town :)
@@ -151,7 +153,11 @@ const OffersandBlogs = () => {
           </div>
           <br />
           <div style={entireBlog}>
-            <img className={classes.imgSize} src={item2} alt="item2" />
+            <img
+              className={classes.imgSize}
+              src={"https://i.ibb.co/MVCBqXP/Chipotle.jpg"}
+              alt="item2"
+            />
             <p className={classes.para}>
               ALways good to have a bowl of chipotle. 7/10{" "}
             </p>
@@ -160,7 +166,11 @@ const OffersandBlogs = () => {
           </div>
 
           <div style={entireBlog}>
-            <img className={classes.imgSize} src={item3} alt="item3" />
+            <img
+              className={classes.imgSize}
+              src={"https://i.ibb.co/HgnXRqt/Chicken-seekh.jpg"}
+              alt="item3"
+            />
             <p className={classes.para}>Taste so gooood. </p>
             <Profile name="Khum" date="2021/12/1" pic={pic} />
           </div>
