@@ -18,6 +18,9 @@ const Profile = ({ name, date, pic }) => {
           width: "60px",
           height: "35px",
         }}
+        onClick={() =>
+          window.open("https://www.facebook.com/profile.php?id=100006011928461")
+        }
       >
         Follow
       </button>
