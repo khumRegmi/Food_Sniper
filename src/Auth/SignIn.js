@@ -11,6 +11,7 @@ export default function SignIn() {
     useContext(SignInCtx);
 
   const [hasAccount, setHasAccount] = useState(true);
+  const [loginErr, setLoginErr] = useState(false);
 
   const [userInfo, setUserInfo] = useState({
     userName: "",
@@ -61,7 +62,7 @@ export default function SignIn() {
     }
 
     if (!validateEmail(userInfo.emailAddr)) {
-      alert("Incrrect Email");
+      alert("Incorrect Email");
       return;
     }
     axios
@@ -82,7 +83,7 @@ export default function SignIn() {
 
   const loginHandler = () => {
     if (!logininfo.loginName || !logininfo.loginPassword) {
-      alert("USername or password can not be empty");
+      alert("Username or password can not be empty");
       return;
     }
     axios
@@ -91,13 +92,16 @@ export default function SignIn() {
         password: logininfo.loginPassword,
       })
       .then((resp) => {
-        console.log(resp.data);
-        setNameUser(resp.data.data.username);
-        setEmailUser(resp.data.data.email);
-        setAuthUserId(resp.data.data._id);
-        setSignIn(true);
+        if (!resp.data.data) return setLoginErr(true);
+        // console.log(resp.data);
+        else if (resp.data.data) {
+          setNameUser(resp.data.data.username);
+          setEmailUser(resp.data.data.email);
+          setAuthUserId(resp.data.data._id);
+          setSignIn(true);
+          history.push("/");
+        }
       });
-    history.push("/");
   };
 
   return (
@@ -121,6 +125,11 @@ export default function SignIn() {
               value={logininfo.loginPassword}
               onChange={handleLoginInfo}
             ></input>
+            {loginErr && (
+              <p style={{ color: "red", marginTop: "5px" }}>
+                Username/Password invaid
+              </p>
+            )}
 
             <button className={classes.button} onClick={loginHandler}>
               Login
