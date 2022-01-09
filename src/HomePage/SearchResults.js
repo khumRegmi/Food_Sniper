@@ -7,20 +7,50 @@ import { SocialIcon } from "react-social-icons";
 
 export default function RestaurantList() {
   const foodName = useParams().foodName.toLowerCase();
+
+  const [sortVal, setSortVal] = useState("popularity");
+
+  const sortVals = [
+    {
+      sort: "popularity",
+      name: "Popularity",
+    },
+    {
+      sort: "rating",
+      name: "Ratings",
+    },
+    {
+      sort: "recent",
+      name: "Recently Added",
+    },
+  ];
+
   const [isLoading, setIsLoading] = useState(true);
+
+  const [filter, setFilter] = useState(false);
+  const [sortedOrder, setSortedOrder] = useState("Popularity");
   const [arr, setArr] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
     axios
       .get(
-        `https://foodhub-api.herokuapp.com/restaurant/search?food=${foodName}`
+        `https://foodhub-api.herokuapp.com/restaurant/search?food=${foodName}&sort=${sortVal}`
       )
       .then((resp) => {
         setArr([...resp.data.data]);
         setIsLoading(false);
       });
-  }, []);
+  }, [filter]);
+
+  const sortValHandler = (event) => {
+    setSortVal(event.target.value);
+  };
+
+  const filterHandler = () => {
+    setFilter(!filter);
+    setSortedOrder(sortVal);
+  };
 
   return (
     <div>
@@ -49,99 +79,179 @@ export default function RestaurantList() {
             backgroundColor: "skyblue",
           }}
         >
-          <h1
-            style={{
-              color: "red",
-              display: "flex",
-              justifyContent: "center",
-              fontFamily: "serif",
-              backgroundColor: "pink",
-            }}
-          >
-            Based on your search, this is a list of available
-            <br />
-            restaurants that serve '{foodName}'
-          </h1>
-          {!arr.length && <h1>No results. Apologies! </h1>}
-          <Link to="/">
-            <button
+          <div>
+            <h2
               style={{
-                textDecoration: "none",
-                borderRadius: "25px",
-                backgroundColor: "lightyellow",
+                color: "red",
+                display: "flex",
+                justifyContent: "center",
+                fontFamily: "serif",
+                backgroundColor: "pink",
               }}
             >
-              Back to home page
-            </button>
-          </Link>
-          <ul style={{ marginTop: "20px" }}>
-            {arr.map((item) => (
-              <li
+              Based on your search, this is a list of available
+              <br />
+              restaurants that serve '{foodName}'
+            </h2>
+            {!arr.length && <h1>No results. Apologies! </h1>}
+            <Link to="/">
+              <button
                 style={{
-                  padding: "30px",
-                  display: "flex",
-                  flexDirection: "row",
-                  alignContent: "space-evenly",
-                  alignItems: "normal",
-                  border: "solid black",
-                  // borderRadius: "10%",
-                  margin: "auto 10% 24px",
-                  width: "400px",
-                  height: "150px",
+                  textDecoration: "none",
+                  borderRadius: "25px",
                   backgroundColor: "lightyellow",
-                  cursor: "pointer",
-                }}
-                key={item._id}
-                onClick={() => {
-                  let key = `${item._id}`;
-                  history.push(`/restaurant/${key}`);
+                  marginBottom: "20px",
                 }}
               >
-                <div>
-                  <img
-                    style={{ width: "100px", height: "100px", padding: "10px" }}
-                    src={`${item.banner_image}`}
-                    alt={`${item.name}`}
-                  />
-                </div>
-                <div>
-                  <h4 style={{ marginBottom: "-20px" }}>{item.name} </h4>
-                  <br />
-                  {item.address.area}, {item.address.district}
-                </div>
-                <div style={{ marginLeft: "100px" }}>
-                  <div
-                    style={{
-                      border: "solid",
-                      padding: "0px 3px 0px ",
-                      backgroundColor: "saddlebrown",
-                      height: "32px",
-                      width: "32px",
-                      color: "white",
-                    }}
-                  >
-                    {item.review.average.toFixed(1)}
+                Back to home page
+              </button>
+            </Link>
+          </div>
+          <div
+            style={{
+              border: "solid lightblue",
+              backgroundColor: "rosybrown",
+              height: "auto",
+              width: "25%",
+              padding: "10px",
+            }}
+          >
+            <h5 style={{ marginTop: "30px", fontFamily: "monospace" }}>
+              Sort by:
+            </h5>
+            <ul
+              style={{
+                listStyleType: "none",
+                marginTop: "20px",
+              }}
+            >
+              {sortVals.map((item) => {
+                return (
+                  <li style={{ display: "flex", flexDirection: "row" }}>
+                    <input
+                      type="radio"
+                      value={item.sort}
+                      name="sortVal"
+                      onClick={sortValHandler}
+                    ></input>
+                    <p
+                      style={{
+                        marginTop: "-7px",
+                        marginLeft: "5px",
+                        fontFamily: "fantasy",
+                      }}
+                    >
+                      {item.name}
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
+            <button
+              style={{
+                marginTop: "-200px",
+                backgroundColor: "orange",
+                marginLeft: "70%",
+              }}
+              onClick={filterHandler}
+            >
+              Filter
+            </button>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              border: "dotted black 3px",
+              width: "65%",
+              marginTop: "-200px",
+              marginLeft: "28%",
+              backgroundColor: "sienna",
+            }}
+          >
+            <p
+              style={{
+                marginLeft: "58%",
+                width: "170px",
+                backgroundColor: "yellow",
+                textAlign: "center",
+              }}
+            >
+              [In order of {sortedOrder}]
+            </p>
+            <ul>
+              {arr.map((item) => (
+                <li
+                  style={{
+                    padding: "30px",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignContent: "space-evenly",
+                    alignItems: "normal",
+                    border: "solid black",
+                    margin: "auto 15% 24px",
+                    width: "400px",
+                    height: "150px",
+                    backgroundColor: "lightyellow",
+                    cursor: "pointer",
+                  }}
+                  key={item._id}
+                  onClick={() => {
+                    let key = `${item._id}`;
+                    history.push(`/restaurant/${key}`);
+                  }}
+                >
+                  <div>
+                    <img
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        padding: "10px",
+                      }}
+                      src={`${item.banner_image}`}
+                      alt={`${item.name}`}
+                    />
                   </div>
-                  <br />
-                  <div style={{ marginTop: "-25px", fontSize: "8px" }}>
-                    {item.review.count} reviews
+                  <div>
+                    <h4 style={{ marginBottom: "-20px" }}>{item.name} </h4>
+                    <br />
+                    {item.address.area}, {item.address.district}
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      marginLeft: "-70px",
-                      marginTop: "10px",
-                    }}
-                  >
-                    <SocialIcon url="https://facebook.com/" />
-                    <SocialIcon url="https://gmail.com/" />
-                    <SocialIcon url="https://twitter.com" />
+                  <div style={{ marginLeft: "100px" }}>
+                    <div
+                      style={{
+                        border: "solid",
+                        padding: "0px 3px 0px ",
+                        backgroundColor: "saddlebrown",
+                        height: "32px",
+                        width: "32px",
+                        color: "white",
+                      }}
+                    >
+                      {item.review.average.toFixed(1)}
+                    </div>
+                    <br />
+                    <div style={{ marginTop: "-25px", fontSize: "8px" }}>
+                      {item.review.count} reviews
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        marginLeft: "-70px",
+                        marginTop: "10px",
+                      }}
+                    >
+                      <SocialIcon url="https://facebook.com/" />
+                      <SocialIcon url="https://gmail.com/" />
+                      <SocialIcon url="https://twitter.com" />
+                    </div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
     </div>
