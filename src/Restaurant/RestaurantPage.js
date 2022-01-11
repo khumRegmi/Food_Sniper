@@ -85,22 +85,21 @@ const RestaurantPage = () => {
   // console.log(restArr);
   // !isLoading && console.log(`${restArr[0]._id}`);
 
-  const aboutHandler = () => {
-    setAbout(true);
-    setMenu(false);
-    setReview(false);
-  };
-
-  const menuHandler = () => {
-    setAbout(false);
-    setMenu(true);
-    setReview(false);
-  };
-
-  const reviewHandler = () => {
-    setAbout(false);
-    setMenu(false);
-    setReview(true);
+  const headingHandler = (e) => {
+    console.log(about);
+    if (e.target.name === "about") {
+      setAbout(true);
+      setMenu(false);
+      setReview(false);
+    } else if (e.target.name === "menu") {
+      setAbout(false);
+      setMenu(true);
+      setReview(false);
+    } else if (e.target.name === "reviews") {
+      setAbout(false);
+      setMenu(false);
+      setReview(true);
+    }
   };
 
   const handlePriceRating = (rate) => {
@@ -193,13 +192,25 @@ const RestaurantPage = () => {
                 justifyContent: "space-around",
               }}
             >
-              <Button variant="info" onClick={aboutHandler}>
+              <Button
+                name="about"
+                variant={about ? "success" : "info"}
+                onClick={headingHandler}
+              >
                 About
               </Button>
-              <Button variant="info" onClick={menuHandler}>
+              <Button
+                name="menu"
+                variant={menu ? "success" : "info"}
+                onClick={headingHandler}
+              >
                 Menu
               </Button>
-              <Button variant="info" onClick={reviewHandler}>
+              <Button
+                name="reviews"
+                variant={review ? "success" : "info"}
+                onClick={headingHandler}
+              >
                 Reviews
               </Button>
             </div>
@@ -222,7 +233,11 @@ const RestaurantPage = () => {
                       Location
                     </h4>
                     <h5 style={{ color: "black", margin: "-10px auto 15px" }}>
-                      {restArr[0].address.area} , {restArr[0].address.district}
+                      {restArr[0].address.area.charAt(0).toUpperCase() +
+                        restArr[0].address.area.slice(1)}
+                      ,{" "}
+                      {restArr[0].address.district.charAt(0).toUpperCase() +
+                        restArr[0].address.district.slice(1)}
                     </h5>
                     <h4 style={{ fontSize: "25px", fontFamily: "serif" }}>
                       Opening Hours:
@@ -546,7 +561,17 @@ const RestaurantPage = () => {
 
             {menu && (
               <div>
-                {!signIn && <p>Please signin to place an order. Thank you!</p>}
+                {!signIn && (
+                  <p
+                    style={{
+                      backgroundColor: "red",
+                      width: "70%",
+                      fontFamily: "monospace",
+                    }}
+                  >
+                    Please signin to place an order. Thank you!
+                  </p>
+                )}
                 {signIn && (
                   <button
                     type="submit"
@@ -560,12 +585,10 @@ const RestaurantPage = () => {
                     }}
                   >
                     <Link style={{ textDecoration: "none" }} to="/cart">
-                      {" "}
-                      Go to Cart{" "}
+                      Go to Cart
                     </Link>
                   </button>
                 )}
-                <h2>Here is list of our items:</h2>
                 <form>
                   <MealCard>
                     <ul>
