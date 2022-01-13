@@ -127,10 +127,9 @@ export default function SignIn() {
             ></input>
             {loginErr && (
               <p style={{ color: "red", marginTop: "5px" }}>
-                Username/Password invaid
+                Username/Password invalid
               </p>
             )}
-
             <button className={classes.button} onClick={loginHandler}>
               Login
             </button>
